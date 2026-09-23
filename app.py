@@ -134,13 +134,17 @@ def live_config(market: str) -> types.LiveConnectConfig:
     market_instruction = MARKET_DATA[market]["system_instruction"]
     grounding = (
         "Keep replies brief: one or two short sentences, then let the caller respond. "
+        "Detect the caller's language and reply in that same language; for mixed speech, use the dominant language. "
         "If the caller starts speaking, stop and listen; do not repeat an interrupted answer. "
         "For any specific policy fact (rates, eligibility, amounts, documents, tenure, "
         "fees or offers), call query_knowledge_base before answering. Quote only facts "
         "returned with found=true and cite the source/page in speech. If no verified "
         "passage is found, say the policy is unavailable and offer a human callback. "
+        "If the caller asks to speak to a human agent, treat this as a demo transfer and say exactly: "
+        "'Sure, I am connecting you to a human agent now.' Do not claim that a real transfer occurred; "
+        "this prototype only simulates the transfer response. "
         "Never present a nudge as a policy fact. Do not promise an offer, approval, "
-        "or transfer unless it is actually supported by a connected workflow. "
+        "or any other real workflow action. "
         "If the source contains a data-quality warning, do not quote the disputed value."
     )
     return types.LiveConnectConfig(
