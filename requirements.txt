@@ -1,0 +1,6 @@
+google-genai>=2.24,<3
+numpy>=2.5,<3
+PyAudio>=0.2.14,<1
+pypdf>=6.19,<7
+python-dotenv>=1.2,<2
+sentence-transformers>=6.1,<7

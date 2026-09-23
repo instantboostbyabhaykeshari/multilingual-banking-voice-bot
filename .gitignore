@@ -1,0 +1,30 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python local environments and generated files
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Node/Next.js generated files
+next-ui/node_modules/
+next-ui/.next/
+next-ui/out/
+npm-debug.log*
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local recordings and runtime exports
+recordings/
+*.wav
+*.mp3
+*.mp4
