@@ -18,7 +18,7 @@ nudges, interruption handling, and measurable latency reporting.
 | False-positive controls | Conservative `NONE`, confidence threshold, usable-text filter, cooldown and duplicate suppression |
 | Compliance example | Unsupported guarantee → `COMPLIANCE_RISK` nudge |
 | Missed-opportunity example | Second vehicle/asset need → `MISSED_CROSS_SELL` nudge |
-| Tests | `test_interruption.py`, `test_nudge_engine.py`, `test_knowledge_base.py` |
+| Tests | `test_assessment.py`, `test_interruption.py`, `test_nudge_engine.py`, `test_knowledge_base.py` |
 
 Recorded calls and video walkthroughs must be captured separately for final
 submission. Do not commit customer recordings or personal information.
@@ -39,13 +39,16 @@ flowchart LR
   KB --> PDF[Approved policy PDF]
 ```
 
-## Setup
+## Clone and setup
+
+After cloning, create the environment and provide your own Gemini key. No API
+key is included in this repository:
 
 ```powershell
 python -m venv venv
 .\venv\Scripts\python.exe -m pip install -r requirements.txt
 Copy-Item .env.example .env
-# Edit .env and add GEMINI_API_KEY locally
+# Edit .env and add your own GEMINI_API_KEY locally
 ```
 
 ### CLI call
@@ -132,8 +135,13 @@ to an exact input chunk.
 Run deterministic tests:
 
 ```powershell
-.\venv\Scripts\python.exe -m unittest -v test_interruption.py test_nudge_engine.py test_knowledge_base.py
+.\venv\Scripts\python.exe -m unittest -v test_assessment.py test_interruption.py test_nudge_engine.py test_knowledge_base.py
 ```
+
+`test_assessment.py` is fully offline and demonstrates the required compliance,
+missed-opportunity, and low-value suppression cases. `smoke_live.py` and
+`smoke_nudges.py` are optional live checks and require the user's own
+`GEMINI_API_KEY`; `smoke_nudges.py` consumes API quota.
 
 The live classifier check consumes Gemini API calls:
 
@@ -166,12 +174,3 @@ should use managed audio gateways, isolated session workers, an autoscaled
 queue, a shared vector store with precomputed embeddings, model rate limiting
 and backoff, circuit breakers, structured logs/metrics/traces, redacted event
 storage, tenant isolation, and regional policy versioning.
-
-## Submission safety checklist
-
-- Commit `.env.example`, never `.env` or API keys.
-- Do not commit customer names, phone numbers, transcripts, or recordings.
-- Add approved recorded demo/video evidence separately after redaction.
-- Include a final latency report from a real microphone session.
-- Record one compliance-risk case and one missed-opportunity case.
-- Run deterministic tests and note the result in the submission.
